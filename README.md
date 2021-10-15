@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/nch-igm/PBFLIP"><img src="img/log_pbflip.jpg" alt="pbflip"></a>
+  <a href="https://github.com/nch-igm/PBFLIP"><img src="img/log_pbflip.jpg" alt="pbflip", width="40%"></a>
   <br>
   PBFLIP
   <br>
