@@ -28,7 +28,7 @@
     </a>
     </a>
     <a href="https://opensource.org/licenses/MIT">
-    <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge&logo=appveyor"
+    <img src="https://img.shields.io/badge/license-BSD3-blue.svg?style=for-the-badge&logo=appveyor"
          alt="License">
   </a>
 </p>
