@@ -2,7 +2,7 @@
   <br>
   <a href="https://github.com/nch-igm/PBFLIP"><img src="img/log_pbflip.jpg" alt="pbflip", width="50%"></a>
   <br>
-  PBFLIP
+  PB_FLIP
   <br>
 </h1>
 
@@ -27,7 +27,7 @@
          alt="Downloads">
     </a>
     </a>
-    <a href="https://opensource.org/licenses/MIT">
+    <a href="https://github.com/nch-igm/PBFLIP/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/license-BSD3-blue.svg?style=for-the-badge&logo=appveyor"
          alt="License">
   </a>
