@@ -150,7 +150,7 @@ To install some of the python dependancies:
 conda install -r environment.yml
 ```
 
-At this point you can follow the instruction in `sandbox_installer.sh`  install rest of the dependancies.
+At this point, you can follow the instruction in [`sandbox_installer.sh`](sandbox_installer.sh)  to install rest of the dependancies.
 
 
 ---
