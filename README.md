@@ -101,6 +101,51 @@ snakemake -f -p -j 16 -c 16 --latency-wait 20
 
 ---
 
+## Dependancies and Conda Environment Setup
+
+Set up conda environment for the PB_FLIP pipeline
+
+```bash
+cd ~
+mkdir apps
+cd apps
+wget https://repo.anaconda.com/miniconda/Miniconda3-py37_4.10.3-Linux-x86_64.sh
+bash Miniconda3-py37_4.10.3-Linux-x86_64.sh
+```
+
+Follow the screen instruction to complete the installation.
+
+Then, activate the base environment. 
+
+```bash
+conda activate base
+```
+
+To install some of the python dependancies:
+
+```bash
+conda install -r environment.yml
+```
+
+At this point you can follow the instruction in `sandbox_installer.sh`  install rest of the dependancies.
+
+
+---
+
+## Inputs
+
+Before you run PB_FLIP, you need to have the following input files from [smrtlink analyses](https://smrtlink.crii.org:8243/sl/docs/SL_Home.htm#SL_CS_SampleSetUp_Top.htm).
+These files are located in $SMRT_ROOT/userdata/jobs_root/0000/0000000/0000000002/outputs/.
+
+
+`cluster_report`: cluster_report.csv
+
+`hq_transcripts`: hq_isoforms.fasta
+
+`flnc`: flnc.bam
+
+---
+
 ## Configuration File
 
 
