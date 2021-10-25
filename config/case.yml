@@ -1,0 +1,68 @@
+CASENAME: Brain_Reference_SIRV_4_C99_I95
+SMRTLINKFILES:
+  version: 10
+  cluster_report: /data/Brain_Reference_SIRV_4_C99_I95/smrt_link_data/cluster_report.csv
+  hq_transcripts: /data/Brain_Reference_SIRV_4_C99_I95/smrt_link_data/hq_isoforms.fasta
+  flnc: /data/Brain_Reference_SIRV_4_C99_I95/smrt_link_data/flnc.bam
+
+ILLUMINASHORTREADS:
+  ill_fastq_R1:
+  ill_fastq_R2:
+
+REFERENCES:
+  species: hs
+  genome: /data/pbflip/isoseq_db/genomes/hg38.fa
+  annotation: /data/pbflip/isoseq_db/genomes/gencode.v32.annotation.gtf
+  isoannotlitegff3: /data/pbflip/isoseq_db/Homo_sapiens_GRCh38_Ensembl_86.gff3
+
+COLLAPSEPARAM:
+  default: "--dun-merge-5-shorter  -c 0.99 -i 0.95"
+
+FILTERBYCOUNTS:
+  default: "--min_count 2 --dun_use_group_count"
+
+PBSVCALLERPARAM:
+  min_ref_span: 50
+  call_min_read_perc_one_sample: 0
+
+PBBAM:
+  index: pbindex
+  bam2fastq: bam2fastq
+
+
+MAPPERS:
+  mapper_default: minimap2
+  mapper_sv: pbmm2
+  short_reads_mapper: STAR
+
+GENOMEINDEX:
+  star_index: /data/pbflip/star_index
+
+TX2G:
+  "/data/pbflip/isoseq_db/gencode.v32.annotation.tr2g_gtf.tsv"
+
+PICARD:
+  default: /data/bin/picard.jar
+
+SNPEFF:
+    default: /data/apps/snpEff/snpEff.jar
+    snpsift: /data/apps/snpEff/SnpSift.jar
+
+ISOSEQSCRIPTS:
+  sqanti_qc: sqanti3_qc.py
+  sqant_filter: sqanti3_RulesFilter.py
+  collapse_isoforms: collapse_isoforms_by_sam.py
+  get_abundance: get_abundance_post_collapse.py
+  filter_by_count: filter_by_count.py
+  filter_away_subset: filter_away_subset.py
+  fusion_finder: fusion_finder.py
+  fusion_collate_info: fusion_collate_info.py 
+
+LIBPATHS:
+  python_lib: "/data/miniconda3/lib/python3.7/site-packages/:/data/apps/cDNA_Cupcake/sequence/:/data/apps/cDNA_Cupcake/cupcake/tofu/"
+
+DISGENET:
+  /data/pbflip/isoseq_db/DisGeNET/curated_gene_disease_associations.tsv
+
+FUSIONHUBDB:
+  /data/pbflip/isoseq_db/FusionDatabase/Fusionhub_global_summary.txt
