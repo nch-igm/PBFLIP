@@ -106,24 +106,6 @@ grep -w "exon" gencode.v32_SIRVome_isoforms_ERCCs_longSIRVs_200709a_C_170612a.gt
 
 ---
 
-## How to Run PBFLIP
-
-1. Clone the repository to your local machine
-
-```bash
-git clone https://github.com/nch-igm/PBFLIP
-cd PBFLIP
-```
-
-2. Edit `config/case.yml`
-3. To run the pipeline you can issue the following command. This will run the pipeline on 16 cpu threads.
-
-```bash
-snakemake -f -p -j 16 -c 16 --latency-wait 20
-```
-
----
-
 ## Dependancies and Conda Environment Setup
 
 Set up conda environment for the PB_FLIP pipeline
@@ -152,6 +134,26 @@ conda install -r environment.yml
 
 At this point, you can follow the instruction in [`sandbox_installer.sh`](sandbox_installer.sh)  to install rest of the dependancies.
 
+
+---
+
+## How to Run PBFLIP
+
+1. Clone the repository to your local machine
+
+```bash
+git clone https://github.com/nch-igm/PBFLIP
+cd PBFLIP
+```
+
+2. Edit `config/case.yml`
+3. To run the pipeline you can issue the following command. This will run the pipeline on 16 cpu threads.
+
+```bash
+snakemake -f -p -j 16 -c 16 --latency-wait 20
+```
+
+---
 
 ---
 
