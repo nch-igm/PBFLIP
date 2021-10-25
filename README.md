@@ -64,6 +64,7 @@ PacBio Fusion and Long Isoform Pipeline (PB_FLIP) incorporates a suite of RNA-Se
   - Download Homo_sapiens_GRCh38_Ensembl_86.zip or Mus_musculus_GRCm38_Ensembl_86.zip
 - [STAR Genome Index](https://physiology.med.cornell.edu/faculty/skrabanek/lab/angsd/lecture_notes/STARmanual.pdf)
   - Provide STAR index folder for short-reads junction support 
+  - Human and Mouse References can be downloaded from [Gencode](http://ftp.ebi.ac.uk/pub/databases/gencode/). The pipeline was tested with Human Genome release version 38.
   
 The absolute paths to these 4 files should be added to `config/case.yml`
 
@@ -75,10 +76,32 @@ FUSIONHUBDB:
   /data/pbflip/isoseq_db/FusionDatabase/Fusionhub_global_summary.txt
 
 REFERENCES:
+    genome: /data/pbflip/isoseq_db/genomes/hg38.fa
+    annotation: /data/pbflip/isoseq_db/genomes/gencode.v32.annotation.gtf
     isoannotlitegff3: /data/pbflip/isoseq_db/Homo_sapiens_GRCh38_Ensembl_86.gff3
 
 GENOMEINDEX:
   star_index: /data/pbflip/star_index
+```
+
+---
+
+## Required Other Files 
+
+```bash
+TX2G:
+  "/data/pbflip/isoseq_db/gencode.v32.annotation.tr2g_gtf.tsv"
+
+```
+
+To create `gencode.v32.annotation.tr2g_gtf.tsv`
+
+```bash
+grep -w "exon" gencode.v32_SIRVome_isoforms_ERCCs_longSIRVs_200709a_C_170612a.gtf \
+        | cut -f9 | cut -f1,2,4 -d";" \
+        | sed 's/gene_id //g' | sed 's/; transcript_id / /' \
+        | sed 's/; gene_name / /'| uniq > gencode.v32.annotation.tr2g_gtf.tsv
+
 ```
 
 ---
