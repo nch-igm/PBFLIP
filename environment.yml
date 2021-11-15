@@ -25,4 +25,5 @@ dependencies:
   - bbmap
   - salmon=0.14.1
   - tbb=2020.2
-  - scikit-learn=0.23.2 
+  - scikit-learn=0.23.2
+  - bx-python=0.8.11
