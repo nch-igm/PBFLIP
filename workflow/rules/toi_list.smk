@@ -16,16 +16,14 @@ def separate_items (db_item ):
     return  ",".join(unnamedSample_HQ_l) + "\t" + ",".join( list(set(event_type_l))) + "\t" +  ",".join(pb_id_l)
 
 
-def get_iso_id ( rci_db, id):
+def get_iso_id ( rci_db_ids_holder , rci_db, id):
     pb_id_holder  = []
-    for id_merge in rci_db.keys ():
-        for id_split in id_merge.split(','):
-            if id == id_split:
-                pb_id_holder.append(rci_db[id_merge])
+    if id in rci_db_ids_holder:
+            pb_id_holder.append(rci_db[id])
     return pb_id_holder 
 
 
-def toi_list_generator( sample_name, collapsed_group, svsig_file, final_results_file, final_results_filtered_out_file, toi_list, pbsv_results, igv_url, log ):
+def toi_list_generator( sample_name, collapsed_group, svsig_file, final_results_file, final_results_filtered_out_file, toi_list, pbsv_results, igvurl, log ):
 
     with open( collapsed_group, "r") as rci:
         rci_db = {}
@@ -39,27 +37,37 @@ def toi_list_generator( sample_name, collapsed_group, svsig_file, final_results_
                 else:
                     rci_db[ hd ] = [key]
 
+    rci_db_ids_holder = []
+    for id_merge in rci_db.keys ():
+        id_split = [id_split for id_split in id_merge.split(',')]
+        rci_db_ids_holder.append( "".join(id_split ) )
     list_df = []
     event_dict = {}
     with gzip.open( svsig_file, "r") as svsig:
         for line in svsig:
             line = line.decode('utf-8')
+            #if not line.startswith("#") and not line.startswith("c") and not line.startswith("s"):
             if not line.startswith("#") and not line.startswith("c"):
                 split_line = line.split()
                 #print (split_line)
                 list_df.append(split_line)
+                
                 if split_line[0] == 'b':
+                    
                     key = split_line[2] +":"+split_line[3]
                     items = split_line[9] + "," +split_line[0]
-                    if get_iso_id ( rci_db,split_line[9]):
-                        items = items + ","+",".join(get_iso_id ( rci_db,split_line[9])[0])
+                    iso_id = get_iso_id ( rci_db_ids_holder, rci_db,split_line[9])
+
+                    if iso_id:
+                        items = items + ","+",".join(iso_id[0])
                     else:
                         items = items + ","+"No PBID"
                 else:
                     key = split_line[2] +":"+split_line[3]
                     items = split_line[4] + "," +split_line[0]
-                    if get_iso_id ( rci_db,split_line[4]):
-                        items = items +"," +",".join(get_iso_id ( rci_db,split_line[4])[0])
+                    iso_id = get_iso_id ( rci_db_ids_holder, rci_db,split_line[4])
+                    if iso_id:
+                        items = items +"," +",".join(iso_id[0])
                     else:
                         items = items + ","+"No PBID"
 
@@ -85,6 +93,14 @@ def toi_list_generator( sample_name, collapsed_group, svsig_file, final_results_
 
     data1 += data2 
 
+    temp_dict = {} # pbids in event_dict
+    temp_2 = [] # pbids in data1
+
+    for data_item in data1:
+        pbid = data_item.split("\t")[0]
+        temp_2.append(pbid)
+        temp_dict[pbid] = data_item
+
     with open(toi_list, "w") as f:
         final_results_headers( f )
         for key in event_dict.keys():
@@ -92,16 +108,16 @@ def toi_list_generator( sample_name, collapsed_group, svsig_file, final_results_
             line_key = key
             for item in items:
                 unnamedSample_HQ, event_type,  pb_id = item.split(",")
+                #temp_1.append(pb_id)
                 #print(line_key, unnamedSample_HQ, event_type,pb_id )
-                for data_item in data1:
-                    if pb_id == data_item.split("\t")[0]:
-                        #print ( line_key, unnamedSample_HQ, event_type, pb_id, data_item)
-                        igv_url = '=HYPERLINK("' + igv_url + '={location}")'.format( location = line_key )
-                        wr_line = "\t".join( [line_key, igv_url,  unnamedSample_HQ, event_type, str(get_no_txs_support ( items))]) +"\t"+data_item
-                        f.write( wr_line )
-                        break
-
-
+ 
+                if pb_id in temp_2:
+                    data_item = temp_dict[ pb_id ]
+                    #print ( line_key, unnamedSample_HQ, event_type, pb_id, data_item)
+                    igv_url = '=HYPERLINK("' + IGVURL + '={location}")'.format( location = line_key )
+                    wr_line = "\t".join( [line_key, igv_url,  unnamedSample_HQ, event_type, str(get_no_txs_support ( items))]) +"\t"+data_item
+                    f.write( wr_line )
+    print ("Done")
 
 rule run_toi_list:
     input:
