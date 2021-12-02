@@ -114,7 +114,7 @@ def toi_list_generator( sample_name, collapsed_group, svsig_file, final_results_
                 if pb_id in temp_2:
                     data_item = temp_dict[ pb_id ]
                     #print ( line_key, unnamedSample_HQ, event_type, pb_id, data_item)
-                    igv_url = '=HYPERLINK("' + IGVURL + '={location}")'.format( location = line_key )
+                    igv_url = '=HYPERLINK("' + igvurl + '={location}")'.format( location = line_key )
                     wr_line = "\t".join( [line_key, igv_url,  unnamedSample_HQ, event_type, str(get_no_txs_support ( items))]) +"\t"+data_item
                     f.write( wr_line )
     print ("Done")
