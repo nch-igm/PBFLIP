@@ -38,7 +38,7 @@ rule run_mapping_css_fastq:
         picard = config["PICARD"]["default"],
         mem = "-Xmx40g",
         parallel_threads = "-XX:ParallelGCThreads=1",
-        temp_dir =  "-Djava.io.tmpdir=/data/tmp",
+        temp_dir =  "-Djava.io.tmpdir=/igm/temp/",
         sort_order = "coordinate"
 
     log:

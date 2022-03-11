@@ -3,7 +3,8 @@ rule run_collapsed_filtered_hq_mapping:
         hq_tx = rules.run_filter_away_subset.output[2]
 
     output:
-        collapsed_filtered_hq_bam_tx = rules.all.input[68]
+        collapsed_filtered_hq_bam_tx = rules.all.input[68],
+        collapsed_filtered_hq_bam_tx_bai = rules.all.input[103]
 
     params:
         genome = config["REFERENCES"]["genome"],

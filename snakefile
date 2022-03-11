@@ -123,7 +123,13 @@ rule all:
         "results/Deliverables/Fusion/Fusion_Step3/{0}_final_pbfusion_mapped_hg38_sorted.bam.bai".format(CASENAME),
         "results/Deliverables/Fusion/Fusion_Step3/lq_isoforms.fasta.fusion.annotated.txt",
         "results/Deliverables/Fusion/Fusion_Step3/lq_isoforms.fasta.fusion.annotated_ignored.txt",
-        "results/Deliverables/Fusion/Fusion_Step4/{0}_fusion_classification_final_results_fusionhub.tsv".format(CASENAME)
+        "results/Deliverables/Fusion/Fusion_Step4/{0}_fusion_classification_final_results_fusionhub.tsv".format(CASENAME),
+        "results/Deliverables/Isoform/Isoform_Step1/{0}_cupcake.collapsed.min_fl_{filter_count_cutoff}.filtered_mapped_hg38_sorted.bam".format(CASENAME, filter_count_cutoff = cutoff),
+        "results/Deliverables/Isoform/Isoform_Step2/{0}_sqanti3_classification.filtered_lite_mapped_hg38_sorted.bam".format(CASENAME),
+        "results/FinalResults/{0}_cupcake.collapsed.min_fl_{filter_count_cutoff}.filtered_mapped_hg38_sorted.bam.bai".format(CASENAME,filter_count_cutoff = cutoff),
+        "results/Deliverables/Isoform/Isoform_Step1/{0}_cupcake.collapsed.min_fl_{filter_count_cutoff}.filtered_mapped_hg38_sorted.bam.bai".format(CASENAME,filter_count_cutoff = cutoff),
+        "results/FinalResults/{0}_sqanti3_classification.filtered_lite_mapped_hg38_sorted.bam.bai".format(CASENAME),
+        "results/Deliverables/Isoform/Isoform_Step2/{0}_sqanti3_classification.filtered_lite_mapped_hg38_sorted.bam.bai".format(CASENAME)
 
 
 include: "workflow/rules/get_smrtlink_files.smk"

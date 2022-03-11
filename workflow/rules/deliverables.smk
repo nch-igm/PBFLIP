@@ -11,7 +11,6 @@ rule run_deliverables:
         collapsed_gff_fl_away = rules.run_filter_away_subset.output[0],
         collapsed_rep_fa_fl_away =  rules.run_filter_away_subset.output[1],
         collapsed_abundance_fl_away =  rules.run_filter_away_subset.output[3],
-        #collapsed_filtered_hq_bam_tx  = rules.run_collapsed_filtered_hq_mapping.output.collapsed_filtered_hq_bam_tx
         sqanti3_class = rules.run_sqanti3_classification.output[0],
         sqanti3_junc = rules.run_sqanti3_classification.output[1],
         sqanti3_corrected_fa = rules.run_sqanti3_classification.output[2],
@@ -44,7 +43,11 @@ rule run_deliverables:
         final_pbfusion_mapped_bam_bai = "results/FinalResults/{0}_final_pbfusion_mapped_hg38_sorted.bam.bai".format(CASENAME),
         fusion_annot =  rules.run_fusion_collect_info.output[0],
         fusion_annot_fltrd = "results/FusionProducts/lq_isoforms.fasta.fusion.annotated_ignored.txt",
-        fusion_classification_final_results =  rules.run_fusion_events.output[0]
+        fusion_classification_final_results =  rules.run_fusion_events.output[0],
+        collapsed_filtered_hq_bam_tx = rules.all.input[68],
+        collapsed_filtered_hq_bam_lite = rules.all.input[33],
+        collapsed_filtered_hq_bam_tx_bai = rules.all.input[103],
+        collapsed_filtered_hq_bam_lite_bai = rules.all.input[105]
 
 
 
@@ -91,7 +94,11 @@ rule run_deliverables:
         final_pbfusion_mapped_bam_bai = rules.all.input[97],
         fusion_annot =  rules.all.input[98],
         fusion_annot_fltrd = rules.all.input[99],
-        fusion_classification_final_results = rules.all.input[100]
+        fusion_classification_final_results = rules.all.input[100],
+        collapsed_filtered_hq_bam_tx =  rules.all.input[101],
+        collapsed_filtered_hq_bam_lite = rules.all.input[102],
+        collapsed_filtered_hq_bam_tx_bai = rules.all.input[104],
+        collapsed_filtered_hq_bam_lite_bai = rules.all.input[106]
     
     params:
         junction_shortreads_out = "results/Deliverables/Isoform/Isoform_Step2.1/{0}SJ.out.tab".format(CASENAME),
@@ -108,30 +115,32 @@ rule run_deliverables:
         for no in range(len(output)):
             orig_file = input[no]
             dest_file = output[no]
+
             shell(\
                     """
                     ln -s $PWD/{orig_file} {dest_file}
                     """ \
             )
-        
+            
         # Check if short reads are processed, then link STAR Junc and Salmon results to Isoform_Step2.1
         step2_1_dir = os.path.dirname(params.junction_shortreads_out)
-        shell("mkdir {step2_1_dir}")
-        if  config["ILLUMINASHORTREADS"]["ill_fastq_R1"]:
-            junction_shortreads = rules.run_short_reads_genome_alignment.params.output_prefix + "SJ.out.tab"
-            expression = rules.run_transcriptome_alignment.params.output_dir
-            shell(\
-                    """  
-                        ln -s $PWD/{junction_shortreads} $PWD/{params.junction_shortreads_out} 
-                        ln -s $PWD/{expression} $PWD/{params.expression_out} 
-                    """ \
-                )
-        else:
-            shell(\
-                    """
-                        touch {params.junction_shortreads_out} 
-                        mkdir {params.expression_out} 
-                    """ \
-                )
+        if not os.path.isdir(step2_1_dir):
+            shell("mkdir {step2_1_dir}")
+            if  config["ILLUMINASHORTREADS"]["ill_fastq_R1"]:
+                junction_shortreads = rules.run_short_reads_genome_alignment.params.output_prefix + "SJ.out.tab"
+                expression = rules.run_transcriptome_alignment.params.output_dir
+                shell(\
+                        """  
+                            ln -s $PWD/{junction_shortreads} $PWD/{params.junction_shortreads_out} 
+                            ln -s $PWD/{expression} $PWD/{params.expression_out} 
+                        """ \
+                    )
+            else:
+                shell(\
+                        """
+                            touch {params.junction_shortreads_out} 
+                            mkdir {params.expression_out} 
+                        """ \
+                    )
 
 

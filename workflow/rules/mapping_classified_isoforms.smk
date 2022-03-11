@@ -3,7 +3,8 @@ rule run_classified_tx_mapping:
         squanti3_output_filtered  = rules.run_sqanti3_filter.output[5]
 
     output:
-        squanti3_output_filtered_bam_tx = rules.all.input[33]
+        squanti3_output_filtered_bam_tx = rules.all.input[33],
+        collapsed_filtered_hq_bam_lite_bai = rules.all.input[105]
 
     params:
         genome = config["REFERENCES"]["genome"],

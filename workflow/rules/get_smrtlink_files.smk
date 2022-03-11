@@ -42,7 +42,8 @@ rule run_get_smrtlink_hq_tx:
         if(os.path.isfile(input[0])):
             shell( 
                     """
-                    cp {input.hq_transcripts} {output.hq_transcripts} >> {log}
+                    cat {input.hq_transcripts} | sed 's/.*_/>/' > {output.hq_transcripts}
+		    echo 'hq_transcripts header changed' >> {log}
                     """
                 )
             
