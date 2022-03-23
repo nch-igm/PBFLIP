@@ -191,7 +191,7 @@ docker run -d -rm -v '$(pwd)/pbflip:/data/pbflip' \
             -e 'configfile=/data/pbflip/config/case.yml' \
             -e 'threads=18' \
             -e 'result_dir=/data/pbflip' \
-            257995316808.dkr.ecr.us-east-2.amazonaws.com/igm/pb-flip:public
+            public.ecr.aws/nch-igm/pb-flip:public
 
 ```
 
