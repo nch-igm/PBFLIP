@@ -33,11 +33,11 @@
   </a>
 </p>
 
-## Overview
+## [Overview](#1.1)
 
 PacBio Fusion and Long Isoform Pipeline (PB_FLIP) incorporates a suite of RNA-Seq software analysis tools and scripts to identify expressed gene fusion partners and isoforms.
 
-## Software Dependancies
+## [Software Dependancies](#1.2)
 
 - Python 3.7
 - Snakemake 6.9.1
@@ -55,7 +55,7 @@ PacBio Fusion and Long Isoform Pipeline (PB_FLIP) incorporates a suite of RNA-Se
 
 ---
 
-## Required External Databases
+## [Required External Databases](#1.3)
 
 - [FusionHubDB](https://fusionhub.persistent.co.in/out/global/Result_0_1000.html)
 - [DisGeNETDB](https://www.disgenet.org/downloads#) 7.0
@@ -70,10 +70,10 @@ The absolute paths to these 4 files should be added to `config/case.yml`
 
 ```bash
 DISGENET:
-  /data/pbflip/isoseq_db/DisGeNET/curated_gene_disease_associations.tsv
+  /data/pbflip/DisGeNET/curated_gene_disease_associations.tsv
 
 FUSIONHUBDB:
-  /data/pbflip/isoseq_db/FusionDatabase/Fusionhub_global_summary.txt
+  /data/pbflip/FusionDatabase/Fusionhub_global_summary.txt
 
 REFERENCES:
     genome: /data/pbflip/isoseq_db/genomes/hg38.fa
@@ -86,7 +86,7 @@ GENOMEINDEX:
 
 ---
 
-## Required Other Files 
+## [Required Other Files ](#1.4)
 
 ```bash
 TX2G:
@@ -106,7 +106,7 @@ grep -w "exon" gencode.v32_SIRVome_isoforms_ERCCs_longSIRVs_200709a_C_170612a.gt
 
 ---
 
-## Dependancies and Conda Environment Setup
+## [Dependancies and Conda Environment Setup](#1.5)
 
 Set up conda environment for the PB_FLIP pipeline
 
@@ -137,7 +137,7 @@ At this point, you can follow the instruction in [`sandbox_installer.sh`](sandbo
 
 ---
 
-## How to Run PBFLIP
+## [How to Run PBFLIP?](#1.6)
 
 1. Clone the repository to your local machine
 
@@ -154,7 +154,48 @@ snakemake -f -p -j 16 -c 16 --latency-wait 20
 ```
 
 ---
+## [How to Run PB-FLIP Docker Container?](#1.7)
 
+1. Clone the repository to your local machine
+
+```bash
+git clone https://github.com/nch-igm/PBFLIP
+cd PBFLIP
+```
+
+2. Edit `config/case.yml`
+3. Create a folder called `pbflip`
+
+```bash
+mkdir pbflip
+```
+
+4. Download all the required databases to `pbflip` directory as described <a id='1.1'>Required External Databases</a>
+
+5. Copy `config` folder to `pbflip`folder
+
+```bash
+pbflip/
+├── Brain_Reference_SIRV_4_C99_I95
+├── config
+├── DisGeNET
+├── FusionDatabase
+├── isoseq_db
+└── star_index
+```
+
+6. To run docker container in your local machine you can issue the following command. This will run the pipeline on 18 cpu threads.
+
+```bash
+docker run -d -rm -v '$(pwd)/pbflip:/data/pbflip' \
+            -e 'configfile=/data/pbflip/config/case.yml' \
+            -e 'threads=18' \
+            -e 'result_dir=/data/pbflip' \
+            257995316808.dkr.ecr.us-east-2.amazonaws.com/igm/pb-flip:public
+
+```
+
+7. The final results will be under `$(pwd)/pbflip/working_dir`
 ---
 
 ## Inputs
@@ -246,6 +287,7 @@ These files are located in $SMRT_ROOT/userdata/jobs_root/0000/0000000/0000000002
 
 `FUSIONHUBDB`
 : Full path to the file downloaded from FusionHUB
+
 
 ---
 
