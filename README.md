@@ -54,10 +54,6 @@ PacBio Fusion and Long Isoform Pipeline (PB_FLIP) incorporates a suite of RNA-Se
 - [SnpEff](http://pcingola.github.io/SnpEff/) 5.0
 
 ---
-## Hardware Requirements
-
-<b>The pipeline was tested with 16 CPU, 128GB RAM and 500GB disk space.
----
 
 ## [Required External Databases](#1.3)
 
@@ -159,6 +155,8 @@ snakemake -f -p -j 16 -c 16 --latency-wait 20
 
 ---
 ## [How to Run PB-FLIP Docker Container?](#1.7)
+
+The PB_FLIP container was evaluated using an AWS sandbox environment (16 CPU, 128GB RAM and 500GB disk space).
 
 1. Clone the repository to your local machine
 
