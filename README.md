@@ -56,7 +56,7 @@ PacBio Fusion and Long Isoform Pipeline (PB_FLIP) incorporates a suite of RNA-Se
 ---
 ## Hardware Requirements
 
-The pipeline was tested with 16 CPU, 128GB RAM and 500GB disk space.
+<b>The pipeline was tested with 16 CPU, 128GB RAM and 500GB disk space.
 ---
 
 ## [Required External Databases](#1.3)
