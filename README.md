@@ -57,7 +57,7 @@ PacBio Fusion and Long Isoform Pipeline (PB_FLIP) incorporates a suite of RNA-Se
 
 ## [Required External Databases](#1.3)
 
-- [FusionHubDB](https://fusionhub.persistent.co.in/out/global/Result_0_1000.html)
+- [FusionHubDB](https://fusionhub.demopersistent.com/out/global/Result_0_1000.html)
 - [DisGeNETDB](https://www.disgenet.org/downloads#) 7.0
   - Download curated_gene_disease_associations.tsv from the above link. 
 - [isoannotlitegff3](http://app.tappas.org/resources/downloads/gffs/)
