@@ -63,7 +63,10 @@ def associate_gene_names_isoforms( isoform_detection_results_input):
             if  not geneid.startswith("novelGene"):
                 geneid_split = geneid.split('_')
                 if len(geneid_split)==1:
-                    associated_gene_id.append(gid2g[geneid])
+                    if geneid in gid2g.keys():
+                        associated_gene_id.append(gid2g[geneid])
+                    else:
+                        associated_gene_id.append(geneid)
                 else:
                     g1 = geneid_split[0]
                     g2 = geneid_split[1]
